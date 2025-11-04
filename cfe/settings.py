@@ -1,5 +1,6 @@
 
-
+import os
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -10,11 +11,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-mxm@ls17n%ptzak&vp-qjmwcm3)r(_v!sm@(5@5(p*3f-spxg6"
+SECRET_KEY = config("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+DEBUG=config("DJANGO_DEBUG", cast=bool)
 
+print("DEBUG =", DEBUG)
 ALLOWED_HOSTS = [
     "railway.app"   
 ]
@@ -49,7 +52,7 @@ ROOT_URLCONF = "cfe.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -73,8 +76,27 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+DATABASES_URL = config("DATABASE_URL", cast=str)
+import dj_database_url
+if DATABASES_URL is not None:
+    DATABASES = {
+    "default": dj_database_url.config(
+        default=DATABASES_URL,
+        conn_health_checks=True,
+        conn_max_age=30,
+    )
+}
 
 
+STATICFILES_BASE_DIR = BASE_DIR / "staticfiles"
+STATIC_VENDORS_DIR = STATICFILES_BASE_DIR / "vendors"
+
+STATICFILES_DIRS = [
+    STATICFILES_BASE_DIR,
+    STATIC_VENDORS_DIR
+]
+
+STATIC_ROOT = BASE_DIR.parent / "local_cdn"
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
