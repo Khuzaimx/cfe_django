@@ -4,23 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}My Django Site{% endblock %}</title>
-
-    <!-- Load CSS first -->
+    <title>{% block title %}Sign In | My Django Site{% endblock %}</title>
     {% include 'css.html' %}
 </head>
-<body>
+<body class="bg-gray-50">
 
-    <!-- Navbar -->
     {% include 'nav/nav.html' %}
 
-    <!-- Page content -->
-    <main class="container mx-auto mt-8 p-4">
-        {% block content %}
-        {% endblock %}
+    <main>
+        {% block content %}{% endblock %}
     </main>
 
-     
     {% include 'js.html' %}
 </body>
 </html>

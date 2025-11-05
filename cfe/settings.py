@@ -47,12 +47,18 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    
     "commando",
+    "allauth_ui",
     'allauth',
+    
+    
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
+    "widget_tweaks",
+    "slippers",
 ]
 
 MIDDLEWARE = [
@@ -152,7 +158,9 @@ AUTHENTICATION_BACKENDS = [
 
 
 SOCIALACCOUNT_PROVIDERS = {
-    
+    'github': {
+        "VERIFIED_EMAIL": True,
+    }
 }
 
 # Internationalization
