@@ -8,4 +8,5 @@ urlpatterns = [
     path("", include("cfe_home.urls")),
     path("", include("auth.urls")),
     path('accounts/', include('allauth.urls')),
+    path("", include("profiles.urls")),
 ]
